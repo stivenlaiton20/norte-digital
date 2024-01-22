@@ -146,11 +146,11 @@ const DetailsSeccion = () => {
     return undefined;
   };
 
-  const updateName = (index: number, field: string, value: string) => {
+  const updateName = (index: number, field: keyof Section, value: string) => {
     setSections((prevSections) => {
       const newSections = [...prevSections];
       newSections[index][field] = value;
-      newSections[index]["quantity"] = 0;
+      newSections[index]["quantity"] = "0";
       newSections[index]["subtotal"] = 0;
       if (watchCurrency !== undefined) {
         if (newSections[index].name !== undefined) {
@@ -158,7 +158,7 @@ const DetailsSeccion = () => {
             newSections[index].name,
             watchCurrency
           );
-          newSections[index]["price"] = price;
+          newSections[index]["price"] = price !== undefined ? price : "";
         }
       }
       setValue("sections", newSections);
@@ -167,7 +167,11 @@ const DetailsSeccion = () => {
       return newSections;
     });
   };
-  const updateQuantity = (index: number, field: string, value: string) => {
+  const updateQuantity = (
+    index: number,
+    field: keyof Section,
+    value: string
+  ) => {
     setSections((prevSections) => {
       const newSections = [...prevSections];
       newSections[index][field] = value;
@@ -178,12 +182,13 @@ const DetailsSeccion = () => {
           sections[index].name,
           watchCurrency
         );
-        let subtotal = price * value;
+        let subtotal: number = (price ?? 0) * parseFloat(value) || 0;
         newSections[index]["subtotal"] = subtotal;
 
         let total = 0;
         newSections.forEach((section) => {
-          const subtotalValue = parseFloat(section.subtotal || 0);
+          const subtotalValue: number =
+            parseFloat(section.subtotal.toString()) || 0;
           total += isNaN(subtotalValue) ? 0 : subtotalValue;
         });
         setValue("total", total);
@@ -216,7 +221,7 @@ const DetailsSeccion = () => {
                     className="w-80"
                     options={suggestions}
                     onChange={(selectedOption) =>
-                      updateName(index, "name", selectedOption.value)
+                      updateName(index, "name", selectedOption?.value ?? "")
                     }
                   />
                 )}
