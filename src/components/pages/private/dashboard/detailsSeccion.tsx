@@ -146,7 +146,7 @@ const DetailsSeccion = () => {
     return undefined;
   };
 
-  const updateName: UpdateFunction = (index, field, value) => {
+  const updateName = (index: number, field: string, value: string) => {
     setSections((prevSections) => {
       const newSections = [...prevSections];
       newSections[index][field] = value;
@@ -167,7 +167,7 @@ const DetailsSeccion = () => {
       return newSections;
     });
   };
-  const updateQuantity: UpdateFunction = (index, field, value) => {
+  const updateQuantity = (index: number, field: string, value: string) => {
     setSections((prevSections) => {
       const newSections = [...prevSections];
       newSections[index][field] = value;
