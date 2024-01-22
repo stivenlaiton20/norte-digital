@@ -66,8 +66,6 @@ const DetailsSeccion = () => {
         };
       });
       setValue("sections", updatedSections);
-
-      // Calcular el nuevo total después de actualizar las secciones
       const newTotal = updatedSections.reduce(
         (total, section) => total + section.subtotal,
         0
@@ -142,13 +140,9 @@ const DetailsSeccion = () => {
   const updateName = (index, field, value) => {
     setSections((prevSections) => {
       const newSections = [...prevSections];
-      // Setear el nuevo nombre
       newSections[index][field] = value;
-      // Establecer quantity en 0
       newSections[index]["quantity"] = 0;
-      // Establecer subtotal en 0
       newSections[index]["subtotal"] = 0;
-      // Actualizar el precio con el nuevo nombre y moneda
       if (watchCurrency !== undefined) {
         if (newSections[index].name !== undefined) {
           let price = getPriceForProductAndCurrency(
@@ -158,10 +152,7 @@ const DetailsSeccion = () => {
           newSections[index]["price"] = price;
         }
       }
-
-      // Establecer el valor en el FormProvider
       setValue("sections", newSections);
-      // Recalcular y actualizar el total después de modificar el nombre
       calculateAndUpdateTotal(newSections);
 
       return newSections;

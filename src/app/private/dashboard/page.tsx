@@ -11,7 +11,7 @@ const Page = () => {
   const methods = useForm();
   const { handleSubmit } = methods;
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     console.log("Datos enviados:", data);
   };
 
