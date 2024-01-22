@@ -31,6 +31,15 @@ const DetailsSeccion = () => {
     currency: string;
     price: number;
   };
+  type IndexType = number | string;
+  type FieldType = string;
+  type ValueType = number | string | boolean;
+
+  type UpdateFunction = (
+    index: IndexType,
+    field: FieldType,
+    value: ValueType
+  ) => void;
 
   const { control, setValue, watch, getValues } = useFormContext();
   const [sections, setSections] = useState<Section[]>(() => [
@@ -137,7 +146,7 @@ const DetailsSeccion = () => {
     return undefined;
   };
 
-  const updateName = (index, field, value) => {
+  const updateName: UpdateFunction = (index, field, value) => {
     setSections((prevSections) => {
       const newSections = [...prevSections];
       newSections[index][field] = value;
@@ -158,7 +167,7 @@ const DetailsSeccion = () => {
       return newSections;
     });
   };
-  const updateQuantity = (index, field, value) => {
+  const updateQuantity: UpdateFunction = (index, field, value) => {
     setSections((prevSections) => {
       const newSections = [...prevSections];
       newSections[index][field] = value;
